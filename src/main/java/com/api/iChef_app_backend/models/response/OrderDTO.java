@@ -16,8 +16,6 @@ public class OrderDTO {
     @NotBlank
     private Client client;
     @NotBlank
-    private Address deliveryAddress;
-    @NotBlank
     private Payment payment;
     @NotBlank
     private List<Product> products;
@@ -37,14 +35,6 @@ public class OrderDTO {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public Address getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(Address deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
     }
 
     public Payment getPayment() {

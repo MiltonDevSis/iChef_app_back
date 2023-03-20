@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -25,22 +26,19 @@ public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotBlank
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "client_id")
+    @NotBlank
     private Client client;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @PrimaryKeyJoinColumn(name = "address")
-    private Address deliveryAddress;
-
-    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "payment_id")
+    @NotBlank
     private Payment payment;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
@@ -71,14 +69,6 @@ public class Order implements Serializable {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public Address getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(Address deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
     }
 
     public Payment getPayment() {

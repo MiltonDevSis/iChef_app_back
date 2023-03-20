@@ -5,12 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "TB_CLIENT")
@@ -22,20 +21,20 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false, length = 50, name = "name")
     private String name;
 
     @Column(length = 100, name = "email")
     private String email;
 
+    @NotBlank
     @Column(nullable = false, length = 11, name = "phone")
     private String phone;
 
+    @NotBlank
     @Column(name = "address")
     private Address address;
-
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders;
 
     public Long getId() {
         return id;
@@ -75,13 +74,5 @@ public class Client implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 }

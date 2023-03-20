@@ -1,6 +1,8 @@
-package com.api.iChef_app_backend.configs;
+package com.api.iChef_app_backend;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.PathSelectors;
@@ -13,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
+
 @EnableSwagger2
 public class SwaggerConfiguration extends WebMvcConfigurationSupport {
 
@@ -20,23 +23,30 @@ public class SwaggerConfiguration extends WebMvcConfigurationSupport {
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors
+                        .basePackage("com.api.iChef_app_backend"))
+                .paths(PathSelectors.regex("/api.*"))
                 .build()
-                .apiInfo(metaInfo());
+                .apiInfo(createMetaInfo());
+
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .select()
+//                .apis(RequestHandlerSelectors.any())
+//                .paths(PathSelectors.any())
+//                .build()
+//                .apiInfo(metaInfo());
     }
 
-    private ApiInfo metaInfo() {
-        return new ApiInfo(
-                "Ichef App",
-                "Api to test the end points ichef app",
-                "1.0.0",
-                "API terms of service",
-                new Contact("Name", "URL", "email"),
-                "API License",
-                "API License URL",
-                new ArrayList<>()
-        );
+    private ApiInfo createMetaInfo() {
+		ApiInfo lApiInfo = new ApiInfo("API REST STI", "API REST Focos de dengue", "1.0",
+				"Uso restrito para estudantes", new Contact("Trabalho de Computação Urbana", "", ""),
+				"Chefe Apache License Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<>());
+		return lApiInfo;
+	}
+
+    @Override
+    protected void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedHeaders("*");
     }
 
     @Override

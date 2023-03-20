@@ -13,18 +13,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order")
-@Api(value = "order")
+@RequestMapping(value = "/api")
+@Api(value = "API REST Adicionar Pedidos")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @PostMapping
-    @ApiOperation(value = "Cria um pedido")
+    @RequestMapping(value = "/AdicionarPedido", method = RequestMethod.POST)
     public ResponseEntity<Order> addOrder(@RequestBody @Valid OrderDTO orderDTO) {
         var order = new Order();
         BeanUtils.copyProperties(orderDTO, order);

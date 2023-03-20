@@ -28,9 +28,6 @@ public class Category implements Serializable {
     @Column(nullable = false, length = 100, name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
-
     public Long getId() {
         return id;
     }
@@ -53,13 +50,5 @@ public class Category implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }
